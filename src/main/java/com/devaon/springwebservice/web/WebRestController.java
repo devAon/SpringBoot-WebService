@@ -1,7 +1,7 @@
 package com.devaon.springwebservice.web;
 
-import com.devaon.springwebservice.domain.posts.PostsRepository;
 import com.devaon.springwebservice.dto.PostsSaveRequestDto;
+import com.devaon.springwebservice.service.PostsService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,15 +13,18 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("/api/posts")
 @AllArgsConstructor
 public class WebRestController {
 
-    private PostsRepository postsRepository;
+    private PostsService postsService;
 
-    @PostMapping
-    public void postPosts(@RequestBody PostsSaveRequestDto dto){
-        postsRepository.save(dto.toEntity());
+    @GetMapping("/hello")
+    public String hello() {
+        return "HelloWorld";
     }
 
+    @PostMapping("/posts")
+    public Long savePosts(@RequestBody PostsSaveRequestDto dto){
+        return postsService.save(dto);
+    }
 }
